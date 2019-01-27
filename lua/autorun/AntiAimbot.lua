@@ -2,11 +2,14 @@
 if SERVER then
 
 	AddCSLuaFile("autorun/client/cl_AntiAimbot.lua")
+	AddCSLuaFile("autorun/client/cl_derma.lua")
 	
 	local kiddyscript = {}
 
 	util.AddNetworkString( "Anti_Aimbot" )
 	util.AddNetworkString( "Anti_Aimbot_Signal" )
+	util.AddNetworkString( "Anti_Aimbot_menu" )
+	util.AddNetworkString( "Anti_Aimbot_menu_Elements" )
 
 	function kiddyscript_TakeDamage( ply, attacker )
 		if kiddyscript[attacker] then
@@ -20,14 +23,14 @@ if SERVER then
 	 		if !kiddyscript[v].Focus then kiddyscript[v].Focus = 0 end
 	 		if kiddyscript[v].Focus > 0 then  print(kiddyscript[v].Focus) end
 	 		if v:GetEyeTrace().Entity:GetClass() == "player" then
-				if v:GetEyeTrace().Entity:GetVelocity():Length() > 200 and v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() ) > 300 then
+				if v:GetEyeTrace().Entity:GetVelocity():Length() > 400 and v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() ) > 500 then
 					kiddyscript[v].Focus = kiddyscript[v].Focus + v:GetEyeTrace().Entity:GetVelocity():Length()/100 + v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() )/100
 				end
 			elseif kiddyscript[v].Focus > 5 then
 				kiddyscript[v].Focus = kiddyscript[v].Focus - 5
 			end
 
-			if kiddyscript[v].Focus > 1000 then  ply:Kick("Aimbot") end
+			if kiddyscript[v].Focus > 1000 then  v:Kick("Aimbot") end
 		end
 
 	 end
@@ -55,6 +58,15 @@ if SERVER then
 		ply:Kick(net.ReadString())
 	end )
 
+	net.Receive( "Anti_Aimbot_menu", function( len, ply )
+		if ply:IsAdmin() or ply:IsSuperAdmin() then
+			net.Start( "Anti_Aimbot_menu_Elements" , true)
+			net.WriteTable(kiddyscript)
+			net.Send( ply )
+		end
+	end )
+
 end
 
 include("autorun/client/cl_AntiAimbot.lua")
+include("autorun/client/cl_derma.lua")
