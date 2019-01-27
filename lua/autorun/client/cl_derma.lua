@@ -3,8 +3,6 @@ net.Receive( "Anti_Aimbot_menu_Elements", function( len, ply )
 
 	local kiddyscript = net.ReadTable()
 
-	PrintTable(kiddyscript)
-
 	local frame = vgui.Create( "DFrame" )
 	frame:SetSize( ScrW()/1.5, ScrH()/1.5 )
 	frame:Center()

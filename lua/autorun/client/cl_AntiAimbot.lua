@@ -22,7 +22,7 @@ if CLIENT then
 
 	kiddyscript.RPlayers.Seteye = kiddyscript.CPlayers.SetEyeAngles
 	kiddyscript.RPlayers.Trace = kiddyscript.CPlayers.GetEyeTrace
-	print(kiddyscript.CPlayers.GetEyeTrace)
+	--print(kiddyscript.CPlayers.GetEyeTrace)
 	function kiddyscript.RPlayers:Lookent() return self:GetEyeTrace() end
 	kiddyscript.REntitys.GetThing = kiddyscript.CEntitys.GetClass
 	kiddyscript.REntitys.vel = kiddyscript.CEntitys.GetVelocity 
@@ -64,7 +64,7 @@ if CLIENT then
         		local headpos = v:GetBonePosition(head)
         		local Noang = ((headpos - LocalPlayer():GetShootPos()):Angle())
 
-        		if EyeAngles() == Noang then print("eyes pos") end
+        		if EyeAngles() == Noang then end
         	end
 		end
 
