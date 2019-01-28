@@ -45,13 +45,13 @@ if SERVER then
 		kiddyscript[ply].Script = net.ReadString()
 		kiddyscript[ply].SetEyeAnglesTrigger = true
 		if !timer.Exists( ply:SteamID() ) then
-			timer.Create( ply:SteamID(), 2, 0, function() kiddyscript[ply].SetEyeAnglesTrigger = false print("reactivate") timer.Remove( ply:SteamID() ) end )
+			timer.Create( ply:SteamID(), 2, 0, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
 		else
-			timer.Adjust( ply:SteamID(), 2, 0, function() kiddyscript[ply].SetEyeAnglesTrigger = false print("reactivate") timer.Remove( ply:SteamID() ) end )
+			timer.Adjust( ply:SteamID(), 2, 0, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
 		end
 		--PrintTable(kiddyscript)
 
-		if file.Exists( kiddyscript[ply].Script, "MOD" ) then print("From server") end
+		if file.Exists( kiddyscript[ply].Script, "MOD" ) then end
 	end )
 
 

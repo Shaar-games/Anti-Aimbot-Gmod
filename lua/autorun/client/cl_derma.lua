@@ -45,7 +45,7 @@ net.Receive( "Anti_Aimbot_menu_Elements", function( len, ply )
 			end
 			if kiddyscript[v].Focus then 
 				local Label = DScrollPanel:Add( "DButton" )
-				Label:SetText( "     ".."Aimbot Rate : "..kiddyscript[v].Focus )
+				Label:SetText( "     ".."Aimbot Rate : "..kiddyscript[v].Focus.." %" )
 				Label:Dock( TOP )
 				Label:SetContentAlignment( 4 )
 				Label:DockMargin( 0, 0, 0, 1 )

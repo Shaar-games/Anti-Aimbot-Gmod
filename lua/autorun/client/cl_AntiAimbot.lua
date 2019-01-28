@@ -18,11 +18,11 @@ if CLIENT then
 	kiddyscript.CEntitys = table.Copy( FindMetaTable("Entity") )
 	kiddyscript.net = table.Copy( net )
 	kiddyscript.debug = table.Copy( debug )
+	kiddyscript.file = table.Copy( file )
 	kiddyscript.User = LocalPlayer()
 
 	kiddyscript.RPlayers.Seteye = kiddyscript.CPlayers.SetEyeAngles
 	kiddyscript.RPlayers.Trace = kiddyscript.CPlayers.GetEyeTrace
-	--print(kiddyscript.CPlayers.GetEyeTrace)
 	function kiddyscript.RPlayers:Lookent() return self:GetEyeTrace() end
 	kiddyscript.REntitys.GetThing = kiddyscript.CEntitys.GetClass
 	kiddyscript.REntitys.vel = kiddyscript.CEntitys.GetVelocity 
@@ -57,30 +57,25 @@ if CLIENT then
 		kiddyAntiAim[CurTime()] = EyeAngles()
 		kiddyscript.Angles = 0
 
-
 		for k,v in pairs(player.GetAll()) do
-			if v:GetThing() == "player" and v:GetModel() != "models/error.mdl" then
+			if v:GetClass() == "player" and v:GetModel() != "models/error.mdl" then
         		local head = v:LookupBone("ValveBiped.Bip01_Head1")
         		local headpos = v:GetBonePosition(head)
-        		local Noang = ((headpos - LocalPlayer():GetShootPos()):Angle())
+        		local Noang = ((headpos - kiddyscript.User:GetShootPos()):Angle())
 
         		if EyeAngles() == Noang then end
         	end
 		end
 
-		if LocalPlayer():Lookent().Entity:GetThing() == "player" then
-			if LocalPlayer():Lookent().Entity:GetVelocity():Length() > 200 and LocalPlayer():GetPos():Distance( LocalPlayer():Lookent().Entity:GetPos() ) > 300 then
-				kiddyscript.Focus = kiddyscript.Focus + LocalPlayer():Lookent().Entity:vel():Length()/100 + LocalPlayer():GetPos():Distance( LocalPlayer():Lookent().Entity:GetPos() )/100
+		if kiddyscript.User:GetEyeTrace().Entity:GetClass() == "player" then
+			if kiddyscript.User:GetEyeTrace().Entity:GetVelocity():Length() > 200 and kiddyscript.User:GetPos():Distance( kiddyscript.User:GetEyeTrace().Entity:GetPos() ) > 300 then
+				kiddyscript.Focus = kiddyscript.Focus + kiddyscript.User:GetEyeTrace().Entity:vel():Length()/100 + kiddyscript.User:GetPos():Distance( kiddyscript.User:GetEyeTrace().Entity:GetPos() )/100
 			end
 		elseif kiddyscript.Focus > 5 then
 			kiddyscript.Focus = kiddyscript.Focus - 5
 		end
 
 		if kiddyscript.Focus > 10000 then Punishme("Lock Aimbot") end
-
-		--if kiddyscript.debug.getinfo(kiddyscript.RPlayers.Lookent).short_src != "gamemodes/base/gamemode/obj_player_extend.lua" then print(debug.getinfo(kiddyscript.RPlayers.Lookent).short_src) end
-		--if kiddyscript.debug.getinfo(kiddyscript.RPlayers.Seteye).short_src != "[C]" then print(debug.getinfo(kiddyscript.RPlayers.Seteye).short_src,"Seteye") end
-		--if kiddyscript.debug.getinfo(kiddyscript.REntitys.GetThing).short_src != "[C]" then print(debug.getinfo(kiddyscript.REntitys.GetThing).short_src) end
 
 		if kiddyscript.SetEyeAnglesTrigger == true then
 			kiddyscript.SetEyeAnglesTrigger = false
@@ -91,29 +86,32 @@ if CLIENT then
 	
 	function kiddyscript.RPlayers:SetEyeAngles(Angleview)
 		
-		if LocalPlayer():Lookent().Entity:GetThing() == "player" then
-			if file.Exists( kiddyscript.debug.getinfo(2).short_src, "MOD" ) or kiddyscript.debug.getinfo(2).short_src == "external" or kiddyscript.debug.getinfo(2).short_src == "RunString" then
-				kiddyscript.SetEyeAnglesTrigger = true
+		if kiddyscript.User:GetEyeTrace().Entity:GetClass() == "player" then
+			if kiddyscript.file.Exists( kiddyscript.debug.getinfo(2).short_src, "MOD" ) or kiddyscript.debug.getinfo(2).short_src == "external" or kiddyscript.debug.getinfo(2).short_src == "RunString" then
+				
 				kiddyscript.net.Start( "Anti_Aimbot" , true)
 				kiddyscript.net.WriteString(kiddyscript.debug.getinfo(2).short_src)
 				kiddyscript.net.SendToServer()
-				hook.Add("Tick","Anti_Aimbot",kiddyscript_Tick)
+
+				kiddyscript.SetEyeAnglesTrigger = true
 			end
 		end
 
-		return LocalPlayer():Seteye(Angleview)
+		return kiddyscript.User:Seteye(Angleview)
 	end
 
 	hook.Add("Tick","Anti_Aimbot",kiddyscript_Tick)
 
 	function kiddyscript.RCUserCmd:SetViewAngles(Angleview)
 		
-		if LocalPlayer():Lookent().Entity:GetThing() == "player" then
-			if file.Exists( kiddyscript.debug.getinfo(2).short_src, "MOD" ) or kiddyscript.debug.getinfo(2).short_src == "external" or kiddyscript.debug.getinfo(2).short_src == "RunString" then
-				kiddyscript.SetEyeAnglesTrigger = true
+		if kiddyscript.User:GetEyeTrace().Entity:GetClass() == "player" then
+			if kiddyscript.file.Exists( kiddyscript.debug.getinfo(2).short_src, "MOD" ) or kiddyscript.debug.getinfo(2).short_src == "external" or kiddyscript.debug.getinfo(2).short_src == "RunString" then
+				
 				kiddyscript.net.Start( "Anti_Aimbot" , true)
 				kiddyscript.net.WriteString(kiddyscript.debug.getinfo(2).short_src)
 				kiddyscript.net.SendToServer()
+
+				kiddyscript.SetEyeAnglesTrigger = true
 			end
 		end
 		
