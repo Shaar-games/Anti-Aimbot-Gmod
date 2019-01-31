@@ -23,12 +23,14 @@ if SERVER then
 	 			if !kiddyscript[v] then kiddyscript[v] = {} end
 	 			if !kiddyscript[v].Focus then kiddyscript[v].Focus = 0 end
 	 			--if kiddyscript[v].Focus > 0 then  print(kiddyscript[v].Focus) end
-	 			if v:GetEyeTrace().Entity:GetClass() == "player" then
-					if v:GetEyeTrace().Entity:GetVelocity():Length() > 400 and v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() ) > 500 then
-						kiddyscript[v].Focus = kiddyscript[v].Focus + v:GetEyeTrace().Entity:GetVelocity():Length()/100 + v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() )/100
+	 			if v:GetEyeTrace() then
+	 				if v:GetEyeTrace().Entity:GetClass() == "player" then
+						if v:GetEyeTrace().Entity:GetVelocity():Length() > 400 and v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() ) > 500 then
+							kiddyscript[v].Focus = kiddyscript[v].Focus + v:GetEyeTrace().Entity:GetVelocity():Length()/100 + v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() )/100
+						end
+					elseif kiddyscript[v].Focus > 5 then
+						kiddyscript[v].Focus = kiddyscript[v].Focus - 5
 					end
-				elseif kiddyscript[v].Focus > 5 then
-					kiddyscript[v].Focus = kiddyscript[v].Focus - 5
 				end
 	
 				if kiddyscript[v].Focus > 1000 then  v:Kick("Aimbot") end
