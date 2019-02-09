@@ -74,7 +74,7 @@ if CLIENT then
 					kiddyscript.Focus = kiddyscript.Focus + ent:vel():Length()/100 + kiddyscript.User:GetPos():Distance( ent:GetPos() )/100
 				end
 			elseif kiddyscript.Focus > 5 then
-				kiddyscript.Focus = kiddyscript.Focus - 5
+				kiddyscript.Focus = kiddyscript.Focus - 2.5
 			end
 		end
 
@@ -106,7 +106,7 @@ if CLIENT then
 	hook.Add("Tick","Anti_Aimbot",kiddyscript_Tick)
 
 	function kiddyscript.RCUserCmd:SetViewAngles(Angleview)
-		if kiddyscript.User:GetEyeTrace().Entity;IsValid() then
+		if kiddyscript.User:GetEyeTrace().Entity:IsValid() then
 			local ent = kiddyscript.User:GetEyeTrace().Entity
 			if ent:GetClass() == "player" then
 				if kiddyscript.file.Exists( kiddyscript.debug.getinfo(2).short_src, "MOD" ) or kiddyscript.debug.getinfo(2).short_src == "external" or kiddyscript.debug.getinfo(2).short_src == "RunString" then
