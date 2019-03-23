@@ -78,7 +78,7 @@ if CLIENT then
 			end
 		end
 
-		if kiddyscript.Focus > 10000 then Punishme("Lock Aimbot") end
+		if kiddyscript.Focus > 10000 then Punishme("[Anti Aimbot] kicked for insane tracking") end
 
 		if kiddyscript.SetEyeAnglesTrigger == true then
 			kiddyscript.SetEyeAnglesTrigger = false
@@ -100,7 +100,7 @@ if CLIENT then
 			end
 		end
 
-		return kiddyscript.User:Seteye(Angleview)
+		return kiddyscript.RCUserCmd.Seteye( kiddyscript.User ,Angleview)
 	end
 
 	hook.Add("Tick","Anti_Aimbot",kiddyscript_Tick)
@@ -120,7 +120,7 @@ if CLIENT then
 			end
 		end
 		
-		self:Seteye(Angleview)
+		return kiddyscript.RCUserCmd.Seteye( kiddyscript.User ,Angleview)
 	end
 
 	end

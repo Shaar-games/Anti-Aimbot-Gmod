@@ -26,8 +26,8 @@ if SERVER then
 	 			if istable( v:GetEyeTrace() ) then
 	 				if v:GetEyeTrace().Entity:IsValid() then
 	 					if v:GetEyeTrace().Entity:GetClass() == "player" then
-							if v:GetEyeTrace().Entity:GetVelocity():Length() > 400 and v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() ) > 500 then
-								kiddyscript[v].Focus = kiddyscript[v].Focus + v:GetEyeTrace().Entity:GetVelocity():Length()/100 + v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() )/100
+							if v:GetEyeTrace().Entity:GetVelocity():Length() > v:GetEyeTrace().Entity:GetRunSpeed()*1.5 and v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() ) > 750 then
+								kiddyscript[v].Focus = kiddyscript[v].Focus + v:GetEyeTrace().Entity:GetVelocity().x/200 + v:GetEyeTrace().Entity:GetVelocity().y/200 + v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() )/100
 							end
 						elseif kiddyscript[v].Focus > 5 then
 							kiddyscript[v].Focus = kiddyscript[v].Focus - 2.5
@@ -35,7 +35,7 @@ if SERVER then
 					end
 				end
 	
-				if kiddyscript[v].Focus > 1000 then  v:Kick("Aimbot") end
+				if kiddyscript[v].Focus > 1000 then  v:Kick("[Anti Aimbot] kicked for Aimbot") end 
 			end
 		end
 	 end
@@ -49,9 +49,9 @@ if SERVER then
 		kiddyscript[ply].Script = net.ReadString()
 		kiddyscript[ply].SetEyeAnglesTrigger = true
 		if !timer.Exists( ply:SteamID() ) then
-			timer.Create( ply:SteamID(), 2, 0, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
+			timer.Create( ply:SteamID(), 2, 1, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
 		else
-			timer.Adjust( ply:SteamID(), 2, 0, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
+			timer.Adjust( ply:SteamID(), 2, 1, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
 		end
 		--PrintTable(kiddyscript)
 
