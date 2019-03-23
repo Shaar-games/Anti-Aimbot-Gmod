@@ -1,7 +1,7 @@
 
 if SERVER then
 
-	AddCSLuaFile("autorun/client/cl_AntiAimbot.lua")
+	AddCSLuaFile("autorun/client/cl_antiaimbot.lua")
 	AddCSLuaFile("autorun/client/cl_derma.lua")
 	
 	local kiddyscript = {}
@@ -73,5 +73,5 @@ if SERVER then
 
 end
 
-include("autorun/client/cl_AntiAimbot.lua")
+include("autorun/client/cl_antiaimbot.lua")
 include("autorun/client/cl_derma.lua")

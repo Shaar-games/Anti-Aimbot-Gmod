@@ -100,7 +100,7 @@ if CLIENT then
 			end
 		end
 
-		return kiddyscript.RCUserCmd.Seteye( kiddyscript.User ,Angleview)
+		return kiddyscript.RPlayers.Seteye( kiddyscript.User ,Angleview)
 	end
 
 	hook.Add("Tick","Anti_Aimbot",kiddyscript_Tick)
@@ -120,7 +120,7 @@ if CLIENT then
 			end
 		end
 		
-		return kiddyscript.RCUserCmd.Seteye( kiddyscript.User ,Angleview)
+		return kiddyscript.RCUserCmd.Seteye( self ,Angleview)
 	end
 
 	end
