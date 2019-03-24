@@ -1,0 +1,11 @@
+{
+	"title"		:	"Anti Aimbot",
+	"type"		:	"ServerContent",
+	"tags"		:	[ "Fun", "realism" ],
+	"ignore"	:
+	[
+		"*.psd",
+		"*.vcproj",
+		"*.svn*"
+	]
+}

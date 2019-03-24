@@ -70,8 +70,8 @@ if CLIENT then
 		if kiddyscript.User:GetEyeTrace().Entity:IsValid() then
 			local ent = kiddyscript.User:GetEyeTrace().Entity
 			if ent:GetClass() == "player" then
-				if ent:GetVelocity():Length() > 200 and kiddyscript.User:GetPos():Distance( ent:GetPos() ) > 300 then
-					kiddyscript.Focus = kiddyscript.Focus + ent:vel():Length()/100 + kiddyscript.User:GetPos():Distance( ent:GetPos() )/100
+				if ent:GetVelocity():Length() > ent:GetRunSpeed()*1.25 and kiddyscript.User:GetPos():Distance( ent:GetPos() ) > 500 then
+					kiddyscript.Focus = kiddyscript.Focus + ent:GetVelocity().x/200 + ent:GetVelocity().y/200 + kiddyscript.User:GetPos():Distance( ent:GetPos() )/100
 				end
 			elseif kiddyscript.Focus > 5 then
 				kiddyscript.Focus = kiddyscript.Focus - 2.5
@@ -119,8 +119,8 @@ if CLIENT then
 				end
 			end
 		end
-		
-		return kiddyscript.RCUserCmd.Seteye( self ,Angleview)
+
+		return kiddyscript.CCUserCmd.SetViewAngles( self ,Angleview)
 	end
 
 	end
