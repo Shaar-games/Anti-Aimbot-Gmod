@@ -22,20 +22,19 @@ if SERVER then
 	 		if v:IsValid() then
 	 			if !kiddyscript[v] then kiddyscript[v] = {} end
 	 			if !kiddyscript[v].Focus then kiddyscript[v].Focus = 0 end
-	 			--if kiddyscript[v].Focus > 0 then  print(kiddyscript[v].Focus) end
 	 			if istable( v:GetEyeTrace() ) then
 	 				if v:GetEyeTrace().Entity:IsValid() then
 	 					if v:GetEyeTrace().Entity:GetClass() == "player" then
 							if v:GetEyeTrace().Entity:GetVelocity():Length() > v:GetEyeTrace().Entity:GetRunSpeed()*1.5 and v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() ) > 750 then
-								kiddyscript[v].Focus = kiddyscript[v].Focus + v:GetEyeTrace().Entity:GetVelocity().x/200 + v:GetEyeTrace().Entity:GetVelocity().y/200 + v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() )/100
+								kiddyscript[v].Focus = kiddyscript[v].Focus + v:GetEyeTrace().Entity:GetVelocity().x/150 + v:GetEyeTrace().Entity:GetVelocity().y/150 + v:GetPos():Distance( v:GetEyeTrace().Entity:GetPos() )/200
 							end
-						elseif kiddyscript[v].Focus > 5 then
-							kiddyscript[v].Focus = kiddyscript[v].Focus - 2.5
+						elseif kiddyscript[v].Focus > 10 then
+							kiddyscript[v].Focus = kiddyscript[v].Focus - 10
 						end
 					end
 				end
 	
-				if kiddyscript[v].Focus > 1000 then  v:Kick("[Anti Aimbot] kicked for Aimbot") end 
+				if kiddyscript[v].Focus > 2000 then  v:Kick("[Anti Aimbot] kicked for Insane Tracking") end 
 			end
 		end
 	 end
@@ -48,19 +47,18 @@ if SERVER then
 		if !kiddyscript[ply] then kiddyscript[ply] = {} end
 		kiddyscript[ply].Script = net.ReadString()
 		kiddyscript[ply].SetEyeAnglesTrigger = true
-		if !timer.Exists( ply:SteamID() ) then
-			timer.Create( ply:SteamID(), 2, 1, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
+		if !timer.Exists( "Anti_Aimbot" .. ply:SteamID() ) then
+			timer.Create( "Anti_Aimbot" .. ply:SteamID(), 2, 1, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
 		else
-			timer.Adjust( ply:SteamID(), 2, 1, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
+			timer.Adjust( "Anti_Aimbot" .. ply:SteamID(), 2, 1, function() kiddyscript[ply].SetEyeAnglesTrigger = false timer.Remove( ply:SteamID() ) end )
 		end
-		--PrintTable(kiddyscript)
 
 		if file.Exists( kiddyscript[ply].Script, "MOD" ) then end
 	end )
 
 
 	net.Receive( "Anti_Aimbot_Signal", function( len, ply )
-		ply:Kick(net.ReadString())
+		ply:Kick("bad net")
 	end )
 
 	net.Receive( "Anti_Aimbot_menu", function( len, ply )

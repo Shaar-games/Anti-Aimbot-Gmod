@@ -21,13 +21,6 @@ if CLIENT then
 	kiddyscript.file = table.Copy( file )
 	kiddyscript.User = LocalPlayer()
 
-	kiddyscript.RPlayers.Seteye = kiddyscript.CPlayers.SetEyeAngles
-	kiddyscript.RPlayers.Trace = kiddyscript.CPlayers.GetEyeTrace
-	kiddyscript.RPlayers.Lookent = kiddyscript.CPlayers.GetEyeTrace
-	kiddyscript.REntitys.GetThing = kiddyscript.CEntitys.GetClass
-	kiddyscript.REntitys.vel = kiddyscript.CEntitys.GetVelocity 
-	kiddyscript.RCUserCmd.Seteye = kiddyscript.CCUserCmd.SetViewAngles
-
 	local function Punishme(reason)
 		kiddyscript.net.Start( "Anti_Aimbot_Signal" , false)
 		kiddyscript.net.WriteString(reason)
@@ -54,18 +47,7 @@ if CLIENT then
 
 	local function kiddyscript_Tick()
 		
-		kiddyAntiAim[CurTime()] = EyeAngles()
 		kiddyscript.Angles = 0
-
-		--for k,v in pairs(player.GetAll()) do
-		--	if v:GetClass() == "player" and v:GetModel() != "models/error.mdl" then
-        --		local head = v:LookupBone("ValveBiped.Bip01_Head1")
-        --		local headpos = v:GetBonePosition(head)
-        --		local Noang = ((headpos - kiddyscript.User:GetShootPos()):Angle())
-        --
-        --		if EyeAngles() == Noang then end
-        --	end
-		--end
 		
 		if kiddyscript.User:GetEyeTrace().Entity:IsValid() then
 			local ent = kiddyscript.User:GetEyeTrace().Entity
@@ -87,25 +69,24 @@ if CLIENT then
 	
 	hook.Add("Tick",Randomstring( math.random( 5, 20 ) ),kiddyscript_Tick)
 	
-	function kiddyscript.RPlayers:SetEyeAngles(Angleview)
-		
-		if kiddyscript.User:GetEyeTrace().Entity:GetClass() == "player" then
-			if kiddyscript.file.Exists( kiddyscript.debug.getinfo(2).short_src, "MOD" ) or kiddyscript.debug.getinfo(2).short_src == "external" or kiddyscript.debug.getinfo(2).short_src == "RunString" then
-				
-				kiddyscript.net.Start( "Anti_Aimbot" , true)
-				kiddyscript.net.WriteString(kiddyscript.debug.getinfo(2).short_src)
-				kiddyscript.net.SendToServer()
-
-				kiddyscript.SetEyeAnglesTrigger = true
+	function kiddyscript.RPlayers.SetEyeAngles( u , Angleview)
+		if kiddyscript.User:GetEyeTrace().Entity:IsValid() then
+			local ent = kiddyscript.User:GetEyeTrace().Entity
+			if ent:GetClass() == "player" then
+				if kiddyscript.file.Exists( kiddyscript.debug.getinfo(2).short_src, "MOD" ) or kiddyscript.debug.getinfo(2).short_src == "external" or kiddyscript.debug.getinfo(2).short_src == "RunString" then
+					
+					kiddyscript.net.Start( "Anti_Aimbot" , true)
+					kiddyscript.net.WriteString(kiddyscript.debug.getinfo(2).short_src)
+					kiddyscript.net.SendToServer()
+	
+					kiddyscript.SetEyeAnglesTrigger = true
+				end
 			end
 		end
-
-		return kiddyscript.RPlayers.Seteye( kiddyscript.User ,Angleview)
+		return kiddyscript.CPlayers.SetEyeAngles( u , Angleview )
 	end
 
-	hook.Add("Tick","Anti_Aimbot",kiddyscript_Tick)
-
-	function kiddyscript.RCUserCmd:SetViewAngles(Angleview)
+	function kiddyscript.RCUserCmd.SetViewAngles( u , Angleview)
 		if kiddyscript.User:GetEyeTrace().Entity:IsValid() then
 			local ent = kiddyscript.User:GetEyeTrace().Entity
 			if ent:GetClass() == "player" then
@@ -120,7 +101,7 @@ if CLIENT then
 			end
 		end
 
-		return kiddyscript.CCUserCmd.SetViewAngles( self ,Angleview)
+		return kiddyscript.CCUserCmd.SetViewAngles( u ,Angleview)
 	end
 
 	end
